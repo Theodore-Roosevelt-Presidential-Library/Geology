@@ -1,0 +1,311 @@
+{
+ "_about": "Visitor-friendly descriptions of each map unit in the NPS Geologic Resources Inventory map of Theodore Roosevelt National Park and vicinity (GRI, 2020; source maps Biek & Gonzalez 2001, Gonzalez 2004). Facts trace to NDGS Miscellaneous Series 86 (Biek & Gonzalez, 2001) unless noted. See docs/fact-check.md.",
+ "groups": [
+  {
+   "id": "today",
+   "name": "Still being made",
+   "age": "The last 10,000 years"
+  },
+  {
+   "id": "ice",
+   "name": "The Ice Age",
+   "age": "About 2.6 million to 10,000 years ago"
+  },
+  {
+   "id": "swamp",
+   "name": "The swamp forests",
+   "age": "About 60 million years ago"
+  }
+ ],
+ "units": {
+  "Qal": {
+   "name": "River and creek sand",
+   "formal": "Modern alluvial deposits",
+   "group": "today",
+   "age": "Less than about 500 years old",
+   "color": "#EDE6CF",
+   "short": "Sand, silt and gravel the Little Missouri and its creeks are moving right now.",
+   "story": "This is the floor of today's river valleys: sand, silt, clay and gravel dropped by the Little Missouri and its creeks in floods. Radiocarbon dates from charcoal and bone in these deposits show it all settled out within the last 500 years or so. Cottonwood groves, campgrounds and the best wildlife bottoms sit on it.",
+   "look": "Flat ground near water, cottonwoods, cutbanks that show layer after layer of flood sand."
+  },
+  "Qoal": {
+   "name": "Older river terraces",
+   "formal": "Older alluvial deposits (Holocene)",
+   "group": "today",
+   "age": "Several hundred to about 6,600 years old",
+   "color": "#DCCFA6",
+   "short": "Benches of old flood sand a few feet above today's creeks.",
+   "story": "Step up from a creek bed and you are often on one of these flat benches. Each is an old floodplain that the stream later cut down through. Dark bands in the banks are buried soils, where grass grew for centuries before the next floods buried it. Charcoal from these benches has been radiocarbon dated to as much as about 6,600 years old.",
+   "look": "A sharp, near-vertical bank between the creek and a flat grassy bench."
+  },
+  "Qf": {
+   "name": "Alluvial fans",
+   "formal": "Alluvial fan deposits",
+   "group": "today",
+   "age": "Holocene",
+   "color": "#E6D3B0",
+   "short": "Fan-shaped aprons of mud and gravel where side gullies spill out.",
+   "story": "Every time a storm hits the badlands, side gullies flush mud and gravel out onto the valley floor. Where they spill out they spread into a fan. Some fans are still growing; older ones have been cut by the creeks below them.",
+   "look": "Gentle cone-shaped slopes at the mouth of a gully."
+  },
+  "Qf1": {
+   "name": "Alluvial fans",
+   "formal": "Modern alluvial fan deposits",
+   "group": "today",
+   "age": "Holocene (active)",
+   "color": "#E6D3B0",
+   "short": "Active fans of mud and gravel where side gullies spill out.",
+   "story": "Every time a storm hits the badlands, side gullies flush mud and gravel out onto the valley floor and spread it into a fan. These fans are still active and growing.",
+   "look": "Gentle cone-shaped slopes at the mouth of a gully."
+  },
+  "Qf2": {
+   "name": "Older alluvial fans",
+   "formal": "Holocene-age alluvial fan deposits",
+   "group": "today",
+   "age": "Holocene",
+   "color": "#D9C49C",
+   "short": "Older fans, now cut by the creeks below them.",
+   "story": "These fans formed at the same time as the older river terraces. Streams have since cut into them, leaving them stranded and inactive.",
+   "look": "Cone-shaped slopes with a gully cut through them."
+  },
+  "Qmp": {
+   "name": "Grassy aprons",
+   "formal": "Mantled pediment deposits",
+   "group": "today",
+   "age": "Holocene",
+   "color": "#D6DDB4",
+   "short": "Gentle grassy slopes at the foot of the badlands.",
+   "story": "Below many buttes the land flattens into a smooth, grassy apron. Underneath is a thin skin of sand and silt, washed down from the slopes above or blown in by the wind, usually less than three feet thick, lying on an eroded rock surface.",
+   "look": "Smooth grass slopes that run right up to bare badland walls."
+  },
+  "Qls": {
+   "name": "Landslides and slump blocks",
+   "formal": "Landslide deposits",
+   "group": "today",
+   "age": "Pleistocene to today",
+   "color": "#C9B3C9",
+   "pattern": "hatch",
+   "short": "Hillsides that broke loose and slid, sometimes in one giant block.",
+   "story": "Badlands clay is weak, and when it soaks up water whole hillsides can let go. Many slide on a curved break, rotating backward as they drop. In the North Unit, some slump blocks dropped about 120 feet in one piece and now tilt into the hill at 25 to 50 degrees. The ground is still moving in places.",
+   "look": "Lumpy, hummocky ground, curved scarps and rock layers tilted the wrong way.",
+   "tip": "Stay off fresh slumps and cracked ground, especially after rain."
+  },
+  "Qef": {
+   "name": "Road fill",
+   "formal": "Engineered fill",
+   "group": "today",
+   "age": "Built by people",
+   "color": "#BDBDBD",
+   "short": "Fill placed to build roads and causeways.",
+   "story": "Not every layer is ancient. This is earth moved to build roads, mapped by geologists because it covers the rock beneath.",
+   "look": "Road embankments."
+  },
+  "water": {
+   "name": "Water",
+   "formal": "Open water",
+   "group": "today",
+   "age": "",
+   "color": "#A9C9DE",
+   "short": "The Little Missouri River and ponds.",
+   "story": "The Little Missouri is the sculptor of these badlands. It keeps cutting, a little with every flood.",
+   "look": ""
+  },
+  "Qt1": {
+   "name": "Ice Age river terraces",
+   "formal": "Alluvium beneath Pleistocene terraces (level 1)",
+   "group": "ice",
+   "age": "Pleistocene",
+   "color": "#E9B98A",
+   "short": "Gravel benches left high and dry, about 160 feet above the river.",
+   "story": "These flat-topped benches are old floors of the Little Missouri, stranded as the river cut deeper. In the South Unit there are four levels, from about 160 feet to 270 feet above today's river. The higher the bench, the older the gravel. Look for smooth pebbles of quartzite and porphyry, hard rocks carried in from the southwest.",
+   "look": "Flat-topped benches high above the river, littered with rounded pebbles."
+  },
+  "Qt2": {
+   "same": "Qt1",
+   "formal": "Alluvium beneath Pleistocene terraces (level 2)",
+   "short": "Gravel benches about 220 feet above the river."
+  },
+  "Qt3": {
+   "same": "Qt1",
+   "formal": "Alluvium beneath Pleistocene terraces (level 3)",
+   "short": "Gravel benches about 240 feet above the river."
+  },
+  "Qt4": {
+   "same": "Qt1",
+   "formal": "Alluvium beneath Pleistocene terraces (level 4)",
+   "short": "The highest terrace gravel, about 260 to 270 feet above the river."
+  },
+  "Qsg": {
+   "same": "Qt1",
+   "formal": "Alluvium beneath Pleistocene terraces, undivided",
+   "short": "Ice Age river gravel on benches high above the Little Missouri."
+  },
+  "QTa": {
+   "name": "Upland gravel",
+   "formal": "Upland gravel",
+   "group": "ice",
+   "age": "Pliocene and Pleistocene",
+   "color": "#D9A066",
+   "short": "The river's oldest gravel, left on the highest plateaus.",
+   "story": "On top of the highest plateaus, more than 400 feet above the river, lies a scatter of polished, rust-stained pebbles. They were dropped by rivers before the badlands were carved, when the land here was a gently rolling plain. Some are quartzite and porphyry from far to the southwest. At Sperati Point this gravel is up to 40 feet thick.",
+   "look": "Rounded, polished pebbles on plateau tops, far above any river today."
+  },
+  "Qg": {
+   "name": "Glacial erratics",
+   "formal": "Glacial erratics",
+   "group": "ice",
+   "age": "Pleistocene",
+   "color": "#8A9BB0",
+   "short": "Granite and limestone boulders dropped by Ice Age glaciers.",
+   "story": "Every rock layer in the park is soft sedimentary rock, so a granite boulder here is a stranger. These were carried south by continental ice sheets and left behind when the ice melted. Scattered erratics in the North Unit mark the southwestern edge of where the glaciers reached in this part of North Dakota.",
+   "look": "Rounded pink, gray or speckled boulders sitting on the badland surface near Sperati Point."
+  },
+  "Tsbsl": {
+   "name": "Silcrete lag",
+   "formal": "Taylor bed silcrete lag on top of the Sentinel Butte Formation",
+   "group": "swamp",
+   "age": "Paleocene and younger",
+   "color": "#9AA39A",
+   "short": "Chunks of hard, glassy silcrete left on the surface.",
+   "story": "Silcrete is sand and silt cemented by silica into rock almost as hard as glass. When softer layers around it wash away, the silcrete stays behind as a scatter of hard blocks.",
+   "look": "Hard, pale, flinty blocks on a hilltop."
+  },
+  "Tsb": {
+   "name": "Sentinel Butte Formation",
+   "formal": "Sentinel Butte Formation",
+   "group": "swamp",
+   "age": "Paleocene, about 60 million years ago",
+   "color": "#A89B8C",
+   "short": "Gray-brown layers of an ancient swamp forest: sand, clay, coal and petrified wood.",
+   "story": "These are the gray and brown bands that make up most of the badlands. About 60 million years ago this was low, wet country of rivers, lakes and swamps, fed by sediment washing east from the young Rocky Mountains. Sand became sandstone, mud became mudstone and clay, and swamp plants piled up as peat that became lignite coal. The layers hold petrified stumps, round concretions and seams of coal. About 750 feet of it is exposed in the North Unit; only the lower 300 feet or so remains in the South Unit.",
+   "look": "Steep, rilled gray-brown slopes with little plant cover, dark coal seams and hard sandstone ledges.",
+   "tr": "q-poe"
+  },
+  "Tsbck": {
+   "name": "Clinker (\"scoria\")",
+   "formal": "Sentinel Butte Formation, unnamed clinker beds",
+   "group": "swamp",
+   "age": "Rock 60 million years old; baked much later",
+   "color": "#C2603F",
+   "short": "Red rock baked hard when a coal seam caught fire underground.",
+   "story": "When a seam of lignite catches fire, by lightning, prairie fire or on its own, it can smolder underground for years. The heat bakes the clay and sand above it like bricks in a kiln, and iron in the rock turns it red. Locals call it scoria, but it is not volcanic. The proper name is clinker. Because clinker is harder than the rock around it, it caps buttes and ridges and protects them from erosion.",
+   "look": "Brick-red to orange rock, often capping hilltops. Many park roads are surfaced with it.",
+   "tr": "q-burning"
+  },
+  "Tsbc": {
+   "name": "HT Butte clinker",
+   "formal": "Sentinel Butte Formation, HT Butte clinker",
+   "group": "swamp",
+   "age": "Rock 60 million years old; baked much later",
+   "color": "#A8442B",
+   "short": "The thickest red layer in the South Unit, baked by a burning coal seam.",
+   "story": "At the base of the Sentinel Butte Formation lies the HT Butte lignite. Where it burned, it baked the rock above into the most widespread clinker in the South Unit, 30 to 40 feet thick in many places. It rings the Petrified Forest Plateau and caps the divides east of the river. The most recent burn was at Buck Hill, where a coal vein fire smoldered from 1951 to 1977. Small hills on clinker flats often mark old chimneys, where hot gases vented and melted the rock into glassy slag.",
+   "look": "A thick red band separating the yellowish rock below from the gray-brown rock above.",
+   "tr": "q-burning"
+  },
+  "Tsby": {
+   "name": "Lower yellow bed",
+   "formal": "Sentinel Butte Formation, lower yellow bed",
+   "group": "swamp",
+   "age": "Paleocene",
+   "color": "#D9B44A",
+   "short": "A pale yellow band you can trace across the North Unit.",
+   "story": "About 15 to 30 feet thick, the lower yellow bed sits a short way above the blue bentonite and forms barren, steep slopes. It is a handy marker: geologists used it to prove that the North Unit's slump blocks had dropped about 120 feet.",
+   "look": "A bright yellow stripe high on North Unit slopes."
+  },
+  "Tsbb": {
+   "name": "Blue bentonite and volcanic ash",
+   "formal": "Sentinel Butte Formation, bentonite and ash",
+   "group": "swamp",
+   "age": "Paleocene",
+   "color": "#7F93A6",
+   "short": "A blue-gray clay with a white core of volcanic ash.",
+   "story": "This striking blue band is volcanic ash that drifted here from eruptions more than 250 miles away, settled into a lake and weathered into bentonite clay. A layer of white ash is sandwiched between blue bentonite. Bentonite swells when wet and shrinks when dry, cracking into a crunchy \"popcorn\" crust. It is also slick: many North Unit landslides slid on this layer.",
+   "look": "Flat blue-gray benches with a white stripe, best seen between Oxbow Overlook and River Bend Overlook.",
+   "tip": "Bentonite turns greasy and treacherous when wet. Avoid it after rain."
+  },
+  "Tsbw": {
+   "name": "Petrified wood horizon",
+   "formal": "Sentinel Butte Formation, petrified wood",
+   "group": "swamp",
+   "age": "Paleocene",
+   "color": "#8C7B62",
+   "short": "Upright stumps of trees that grew in an ancient swamp.",
+   "story": "Stumps up to six feet tall and four feet across still stand where they grew. Floods buried the base of each tree in mud, the tops rotted away, and silica in groundwater slowly turned the buried wood to stone.",
+   "look": "Fluted stumps the color of the surrounding rock."
+  },
+  "Tbc": {
+   "name": "Bullion Creek Formation",
+   "formal": "Bullion Creek Formation",
+   "group": "swamp",
+   "age": "Paleocene, a little older than the Sentinel Butte",
+   "color": "#CFAE6E",
+   "short": "Bright yellowish-brown layers, the oldest rock exposed in the South Unit.",
+   "story": "The bright, banded cliffs around Medora belong to the Bullion Creek Formation. Like the Sentinel Butte above it, it was laid down by rivers, lakes and swamps, but it weathers to a lighter yellowish-brown and supports more plants. Only its upper 300 feet are exposed in the South Unit, and it does not reach the surface in the North Unit.",
+   "look": "Light yellow-brown, evenly banded cliffs along the river near Medora and in the Elkhorn Ranch area.",
+   "tr": "q-elkhorn"
+  }
+ },
+ "quotes": {
+  "q-burning": {
+   "text": "The scenery is often exceedingly striking in character, especially in the Bad Lands, with their queer fantastic formations. Among the most interesting features are the burning mines. These are formed by the coal seams that get on fire.",
+   "cite": "Theodore Roosevelt, \"The Round-Up,\" 1887",
+   "url": "https://www.theodorerooseveltcenter.org/digital-library/o274358/"
+  },
+  "q-poe": {
+   "text": "And when one is in the Bad Lands he feels as if they somehow look just exactly as Poe's tales and poems sound.",
+   "cite": "Theodore Roosevelt, Hunting Trips of a Ranchman, 1885",
+   "url": ""
+  },
+  "q-elkhorn": {
+   "text": "My home ranch-house stands on the river brink. From the low, long veranda, shaded by leafy cotton-woods, one looks across sand bars and shallows to a strip of meadowland, behind which rises a line of sheer cliffs and grassy plateaus.",
+   "cite": "Theodore Roosevelt, Hunting Trips of a Ranchman, 1885",
+   "url": ""
+  },
+  "q-moon": {
+   "text": "The Bad Lands seem to be stranger and wilder than ever, the silvery rays turning the country into a kind of grim fairy-land.",
+   "cite": "Theodore Roosevelt, Hunting Trips of a Ranchman, 1885",
+   "url": "https://www.theodorerooseveltcenter.org/quote/after-nightfall-the-face-of-the-country-seems-to-alter-marvelously-and-the-clear-moonlight-only-intensifies-the-change-the-river-gleams-like-running-quicksilver-and-the-moonbeams-play-over-the-gras/"
+  }
+ },
+ "regional": {
+  "_about": "Used when a tap falls outside the detailed park map and Macrostrat returns a state-map formation. Keys match by substring of the formation name.",
+  "Bullion Creek": "Tbc",
+  "Sentinel Butte": "Tsb",
+  "Golden Valley": {
+   "name": "Golden Valley Formation",
+   "short": "Bright white, orange and purple clays from a warm, wet time after the swamp forests.",
+   "story": "The Golden Valley Formation sits above the Sentinel Butte Formation on scattered high buttes. Its bright white and orange clays formed as soils in a warm, humid climate, around the boundary between the Paleocene and Eocene epochs."
+  },
+  "Slope": {
+   "name": "Slope Formation",
+   "short": "River, lake and swamp layers a little older than the Bullion Creek.",
+   "story": "Another layer cake of sandstone, mudstone and lignite from the age right after the dinosaurs, laid down by rivers flowing east from the Rockies."
+  },
+  "Cannonball": {
+   "name": "Cannonball Formation",
+   "short": "Marine sand and mud from the last sea to cover North Dakota.",
+   "story": "Unlike the river and swamp layers of the badlands, the Cannonball Formation was laid down in a shallow sea that reached into the Dakotas just after the age of dinosaurs."
+  },
+  "Ludlow": {
+   "name": "Ludlow Formation",
+   "short": "Coal-bearing river and swamp layers from just after the dinosaurs.",
+   "story": "Sandstone, mudstone and lignite laid down by rivers and swamps at the very start of the Paleocene."
+  },
+  "Hell Creek": {
+   "name": "Hell Creek Formation",
+   "short": "Layers from the last days of the dinosaurs.",
+   "story": "The Hell Creek Formation holds fossils of Triceratops and Tyrannosaurus. It was laid down by rivers at the end of the Cretaceous Period, about 66 million years ago."
+  },
+  "Fox Hills": {
+   "name": "Fox Hills Formation",
+   "short": "Beach and shallow-sea sand from the end of the Cretaceous.",
+   "story": "Sandstone laid down along the shore of the retreating Western Interior Seaway."
+  },
+  "Pierre": {
+   "name": "Pierre Shale",
+   "short": "Dark mud from the floor of an ancient inland sea.",
+   "story": "Dark gray shale laid down on the floor of the Western Interior Seaway during the Cretaceous Period."
+  }
+ }
+}

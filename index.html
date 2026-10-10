@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Read the Rocks — Theodore Roosevelt Presidential Library</title>
+<meta name="description" content="Tap anywhere in Theodore Roosevelt National Park and the North Dakota Badlands, or use your location, to see the rock under your feet and the story it tells. From the Theodore Roosevelt Presidential Library in Medora, North Dakota.">
+<link rel="canonical" href="https://geology.labs.trlibrary.com/">
+<meta property="og:title" content="Read the Rocks — Geology of the North Dakota Badlands">
+<meta property="og:description" content="Tap the map or use your location to see the rock under your feet: swamp forests, burning coal and a river turned by glaciers.">
+<meta property="og:image" content="https://geology.labs.trlibrary.com/assets/photos/hero-painted-canyon.jpg">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#163728">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='12' fill='%2325282A'/%3E%3Ctext x='50' y='62' text-anchor='middle' font-family='Georgia,serif' font-size='44' font-weight='bold' fill='%23ffffff'%3ET.R.%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+<link rel="stylesheet" href="assets/app.css">
+</head>
+<body>
+<header class="masthead">
+  <div class="wrap">
+    <a href="https://www.trlibrary.com/" aria-label="Theodore Roosevelt Presidential Library"><img src="assets/trpl-logo.svg" alt="Theodore Roosevelt Presidential Library"></a>
+    <a href="https://www.trlibrary.com/visit">Plan a visit to the Library →</a>
+  </div>
+</header>
+
+<div class="hero" style="background-image:url('assets/photos/hero-painted-canyon.jpg')">
+  <div class="wrap">
+    <div class="eyebrow">Theodore Roosevelt National Park · North Dakota Badlands</div>
+    <h1>Read the Rocks</h1>
+    <p>Sixty million years of swamp forests, volcanic ash, burning coal and a river turned by glaciers. Tap anywhere, or use your location, to see the rock under your feet.</p>
+    <div class="hero-actions">
+      <button class="btn alt" type="button" data-locate>Use my location</button>
+      <a class="btn ghost" href="#map">Explore the map</a>
+    </div>
+  </div>
+  <div class="hero-credit">Painted Canyon. Photo: Farragutful, CC BY-SA 4.0</div>
+</div>
+
+<nav class="tabs" aria-label="Read the Rocks sections">
+  <div class="wrap" role="tablist">
+    <button role="tab" data-view="map" aria-selected="true">Explore the Map</button>
+    <button role="tab" data-view="layers">Read the Layers</button>
+    <button role="tab" data-view="stops">Where to See It</button>
+    <button role="tab" data-view="story">How the Badlands Formed</button>
+  </div>
+</nav>
+
+<main>
+  <!-- MAP -->
+  <section class="panel" data-panel="map" id="map-panel">
+    <div class="wrap">
+      <div class="panel-head">
+        <div>
+          <div class="eyebrow">Geology explorer</div>
+          <h2>Explore the Map</h2>
+          <p class="lede">Each color is a different rock layer or deposit, mapped by geologists foot by foot across the park. Tap any spot to see what it is, how old it is and what to look for.</p>
+        </div>
+      </div>
+      <div class="map-layout">
+        <aside class="map-side" id="map-side">
+          <button class="btn locate-btn" type="button" data-locate><span class="dot" aria-hidden="true"></span> <span data-locate-label>Use my location</span></button>
+          <p class="small" id="locate-status" role="status" aria-live="polite"></p>
+          <h4>Jump to</h4>
+          <div class="chips" id="jump"></div>
+          <h4>Layers</h4>
+          <label class="toggle"><input type="checkbox" id="lyr-geo" checked> Rock layers</label>
+          <label class="toggle range">Transparency <input type="range" id="geo-opacity" min="20" max="95" value="70" aria-label="Rock layer opacity"></label>
+          <label class="toggle"><input type="checkbox" id="lyr-beds" checked> <span class="swatch line" style="background:#5f7890"></span> Blue bentonite and yellow beds</label>
+          <label class="toggle"><input type="checkbox" id="lyr-erratics" checked> <span class="swatch round" style="background:#56677e"></span> Glacial erratics</label>
+          <label class="toggle"><input type="checkbox" id="lyr-stops" checked> <span class="swatch round" style="background:var(--orange)"></span> Places to see it</label>
+          <label class="toggle"><input type="checkbox" id="lyr-regional"> Regional bedrock beyond the park</label>
+          <h4>Base map</h4>
+          <div class="chips" id="basemaps">
+            <button class="chip" data-base="topo" aria-pressed="true">Topo</button>
+            <button class="chip" data-base="relief" aria-pressed="false">Relief</button>
+            <button class="chip" data-base="imagery" aria-pressed="false">Satellite</button>
+          </div>
+          <details class="legend-box" id="legend-box" open>
+            <summary><h4>Legend <span class="small">· tap to highlight</span></h4></summary>
+            <div id="legend" class="legend"></div>
+          </details>
+        </aside>
+        <div class="map-wrap">
+          <div id="map" role="region" aria-label="Geologic map of Theodore Roosevelt National Park"></div>
+          <div class="map-loading" id="map-loading">Loading the rock map…</div>
+          <div class="map-hint" id="map-hint">Tap anywhere on the map</div>
+          <div class="card-sheet" id="info" hidden aria-live="polite"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LAYERS -->
+  <section class="panel" data-panel="layers" hidden>
+    <div class="wrap">
+      <div class="panel-head">
+        <div>
+          <div class="eyebrow">The layer cake</div>
+          <h2>Read the Layers</h2>
+          <p class="lede">The badlands are a stack of pages, oldest at the bottom. Tap a layer to read its chapter. Thicknesses are drawn roughly to scale for the North and South Units combined.</p>
+        </div>
+      </div>
+      <div class="column-layout">
+        <div class="column-wrap"><svg id="column" role="img" aria-label="Rock layers of the North Dakota Badlands from oldest to youngest"></svg></div>
+        <div class="column-detail box" id="column-detail"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STOPS -->
+  <section class="panel" data-panel="stops" hidden>
+    <div class="wrap">
+      <div class="panel-head">
+        <div>
+          <div class="eyebrow">Where to see it</div>
+          <h2>Where to See It</h2>
+          <p class="lede">Pullouts and trails where the geology is front and center. Every stop links to the map and to directions.</p>
+        </div>
+        <div class="chips" id="stop-filter" role="group" aria-label="Filter by park unit">
+          <button class="chip" data-area="all" aria-pressed="true">All</button>
+          <button class="chip" data-area="south" aria-pressed="false">South Unit</button>
+          <button class="chip" data-area="north" aria-pressed="false">North Unit</button>
+          <button class="chip" data-area="elkhorn" aria-pressed="false">Elkhorn Ranch</button>
+        </div>
+      </div>
+      <div class="stops" id="stops"></div>
+      <div class="notice">Collecting rocks, fossils or petrified wood is illegal in national parks. Leave every stone for the next visitor. Bentonite clay turns slick after rain; stay on trails and off fresh slumps.</div>
+    </div>
+  </section>
+
+  <!-- STORY -->
+  <section class="panel" data-panel="story" hidden>
+    <div class="wrap">
+      <div class="panel-head">
+        <div>
+          <div class="eyebrow">Sixty million years in eight chapters</div>
+          <h2>How the Badlands Formed</h2>
+          <p class="lede">Roosevelt arrived in 1883 to a landscape still being made. It still is.</p>
+        </div>
+      </div>
+      <div class="timeline" id="timeline"></div>
+      <div class="links">
+        <a href="https://www.trlibrary.com/visit"><b>Visit the Library</b><span>Start your Badlands day at the Theodore Roosevelt Presidential Library.</span></a>
+        <a href="https://wildlife.labs.trlibrary.com/"><b>Wildlife Watch</b><span>Bison, wild horses and where to find them.</span></a>
+        <a href="https://aurora.labs.trlibrary.com/"><b>Northern Lights Watch</b><span>Stay out after dark? Check the aurora outlook.</span></a>
+        <a href="https://www.nps.gov/thro/planyourvisit/conditions.htm"><b>Park conditions</b><span>Road and trail status from the National Park Service.</span></a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site">
+  <div class="wrap">
+    <div>Read the Rocks is a guide from the <a href="https://www.trlibrary.com/">Theodore Roosevelt Presidential Library</a> in Medora, North Dakota. Theodore Roosevelt National Park is managed by the <a href="https://www.nps.gov/thro/">National Park Service</a>.</div>
+    <div>Geologic map: National Park Service Geologic Resources Inventory, <a href="https://irma.nps.gov/DataStore/Reference/Profile/1044329">Digital Geologic-GIS Map of Theodore Roosevelt National Park and Vicinity</a>, adapted from Biek &amp; Gonzalez (2001) and Gonzalez (2004), North Dakota Geological Survey. Descriptions draw on <a href="https://www.dmr.nd.gov/ndgs/Publication_List/pdf/MISC%20SERIES/MS-86%20w.plates.pdf">NDGS Miscellaneous Series 86</a>. Beyond the park: <a href="https://macrostrat.org/">Macrostrat</a> (CC BY 4.0) from the USGS State Geologic Map Compilation. Base maps: USGS The National Map. Map is for learning, not for site-specific decisions. <a href="#" id="photo-credits-link">Photo credits</a>.</div>
+    <div id="photo-credits" hidden style="font-size:12px"></div>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script src="assets/vendor/topojson-client.min.js"></script>
+<script src="assets/app.js"></script>
+</body>
+</html>
