@@ -13,7 +13,35 @@
   const MEDORA = [46.9139, -103.5243];
 
   let UNITS = {}, QUOTES = {}, REGIONAL = {}, GROUPS = [], STOPS = [];
-  let map, geoLayer, bedsLayer, erraticsLayer, stopsLayer, coverageLayer, regionalLayer, bases = {};
+  let map, geoLayer, bedsLayer, erraticsLayer, stopsLayer, coverageLayer, regionalLayer, slidesLayer, bases = {};
+  const SLIDE_SVC = "https://ndgishub.nd.gov/arcgis/rest/services/All_Geology/MapServer";
+  const SLIDE_STYLE = JSON.stringify([{ id: 4, source: { type: "mapLayer", mapLayerId: 4 }, drawingInfo: { renderer: { type: "simple",
+    symbol: { type: "esriSFS", style: "esriSFSBackwardDiagonal", color: [110, 79, 122, 255], outline: { type: "esriSLS", style: "esriSLSSolid", color: [110, 79, 122, 255], width: 1 } } } } }]);
+  const slideCache = new Map();
+  // Is this point inside a landslide mapped by the state? Returns {year} or null; undefined if the lookup failed.
+  function slideAt(lat, lng) {
+    const k = lat.toFixed(5) + "," + lng.toFixed(5);
+    if (slideCache.has(k)) return slideCache.get(k);
+    const q = new URLSearchParams({ geometry: `${lng},${lat}`, geometryType: "esriGeometryPoint", inSR: 4326, spatialRel: "esriSpatialRelIntersects", outFields: "Year", returnGeometry: "false", f: "json" });
+    const p = fetch(`${SLIDE_SVC}/4/query?${q}`).then((r) => r.json())
+      .then((d) => (d.features && d.features.length ? { year: d.features[0].attributes.Year } : null))
+      .catch(() => undefined);
+    slideCache.set(k, p);
+    return p;
+  }
+  function slideFact(lat, lng, metaId) {
+    if (!slidesLayer || !map.hasLayer(slidesLayer)) return;
+    slideAt(lat, lng).then((s) => {
+      const box = document.getElementById(metaId)?.closest(".info-meta");
+      if (!box || s === undefined) return;
+      const d = document.createElement("div"); d.className = "fact";
+      d.innerHTML = s
+        ? `<b>Landslide</b><span>Inside a landslide mapped by the North Dakota Geological Survey${s.year ? ` (mapped ${s.year})` : ""}. Expect tilted, broken ground; stay off steep, fresh slopes.</span>`
+        : `<b>Landslide</b><span>No mapped landslide at this spot.</span>`;
+      box.insertBefore(d, box.querySelector(".info-actions"));
+      postHeight();
+    });
+  }
   let features = [];          // unit polygons with bbox for point-in-polygon
   let highlight = null;       // unit symbol currently highlighted
   let tapMarker = null, youMarker = null, youCircle = null, watchId = null, lastYouUnit = undefined, firstFix = true;
@@ -132,6 +160,24 @@
         attribution: 'Regional bedrock: <a href="https://macrostrat.org/">Macrostrat</a> (CC BY 4.0)',
       });
 
+      // Statewide landslide inventory (NDGS, 2016 to 2023), drawn by the state's map server in our own colors.
+      map.createPane("slides"); map.getPane("slides").style.zIndex = 410; map.getPane("slides").style.pointerEvents = "none";
+      const SlideTiles = L.TileLayer.extend({
+        getTileUrl(c) {
+          const R = 6378137 * Math.PI, span = (2 * R) / Math.pow(2, c.z);
+          const x0 = -R + c.x * span, y1 = R - c.y * span;
+          const q = new URLSearchParams({
+            bbox: [x0, y1 - span, x0 + span, y1].join(","), bboxSR: 3857, imageSR: 3857, size: "512,512", dpi: 192,
+            dynamicLayers: SLIDE_STYLE, transparent: "true", format: "png32", f: "image",
+          });
+          return `${SLIDE_SVC}/export?${q}`;
+        },
+      });
+      slidesLayer = new SlideTiles("", {
+        pane: "slides", tileSize: 256, minZoom: 9, maxZoom: 17, opacity: 0.9,
+        attribution: 'Landslides: <a href="https://www.dmr.nd.gov/ndgs/">North Dakota Geological Survey</a>',
+      });
+
       const [topo, cov] = await Promise.all([
         fetch("data/geology.topo.json").then((r) => r.json()),
         fetch("data/coverage.geojson").then((r) => r.json()),
@@ -208,6 +254,10 @@
     toggle("#lyr-erratics", erraticsLayer);
     toggle("#lyr-stops", stopsLayer);
     toggle("#lyr-regional", regionalLayer);
+    toggle("#lyr-slides", slidesLayer);
+    $("#lyr-slides").addEventListener("change", (e) => {
+      if (e.target.checked && map.getZoom() < 9) map.setZoom(10);
+    });
     $("#geo-opacity").addEventListener("input", (e) => { geoOpacity = e.target.value / 100; geoLayer.setStyle(styleUnit); });
     $$("#basemaps .chip").forEach((b) => b.addEventListener("click", () => {
       Object.values(bases).forEach((l) => map.removeLayer(l));
@@ -325,6 +375,7 @@
           ${unitBody(u)}</div>${meta}</div>`, u.color, u.pattern === "hatch");
       if (!opts.silent) setUrl(lat, lng);
       macrostrat(lat, lng).then((r) => { const el = document.getElementById(metaId); if (el) el.textContent = r && r.elevation != null ? fmtFt(r.elevation) : "Not available"; });
+      slideFact(lat, lng, metaId);
       return sym;
     }
     // Outside the detailed park map
@@ -335,6 +386,7 @@
         <div class="formal">Outside the detailed park map${miles >= 1.5 ? ` · ${Math.round(miles).toLocaleString()} miles from Medora` : ""}</div>
         <div id="${metaId}-b"><p class="small">Asking the regional bedrock map what lies here.</p></div></div>${meta}</div>`, "var(--sand)");
     if (!opts.silent) setUrl(lat, lng);
+    slideFact(lat, lng, metaId);
     const r = await macrostrat(lat, lng);
     const h = document.getElementById(metaId + "-h"), b = document.getElementById(metaId + "-b"), el = document.getElementById(metaId);
     if (el) el.textContent = r && r.elevation != null ? fmtFt(r.elevation) : "Not available";
@@ -646,16 +698,17 @@
   const STORY = [
     { when: "About 60 million years ago", title: "Rivers from the Rockies", text: ["The dinosaurs were gone and the Rocky Mountains were rising to the west. Rivers carried their sand and mud east into a low, wet country of channels, lakes and swamps where western North Dakota is today.", "Layer by layer, that sediment built the Bullion Creek and then the Sentinel Butte formations, the yellowish and gray-brown bands you see in every butte."], unit: "Tbc" },
     { when: "Paleocene swamps", title: "Forests with their feet in water", text: ["Conifers, probably relatives of today's bald cypress and redwoods, grew with their roots in standing water. Floods buried the base of each tree in mud. The tops rotted away, but silica in groundwater turned the buried stumps to stone.", "Swamp plants that fell and piled up became peat, then lignite coal. Those dark seams matter later in the story."], photo: "petrified-wood", stop: "petrified" },
+    { when: "About 60 million years ago", title: "Fossil Lake Wannagan", text: ["In the Little Missouri breaks of Billings County, a Science Museum of Minnesota team dug into the yellow Bullion Creek layers every summer from 1970 to 1996. They uncovered a shallow lake on an ancient river floodplain and named it Fossil Lake Wannagan.", "Its mud held about 80 crocodiles, snapping and soft-shelled turtles, the long-snouted reptile Champsosaurus, gars and bowfins, early birds and Plesiadapis, an early relative of primates. More than 100 kinds of plants grew around it, including bald cypress, dawn redwood, magnolia, ginkgo and palm. In the end a flood broke through a riverbank and buried the lake under sand.", "The dig was filled in and replanted when the work ended. Fossil bones on public land are protected by federal law, and nothing may be collected in the national park. If you spot a fossil, leave it and take a photo."], unit: "Tbc" },
     { when: "Paleocene", title: "Ash from distant volcanoes", text: ["Eruptions more than 250 miles away dusted the region with volcanic ash. Washed into a lake, it collected into a thick layer that weathered into blue bentonite clay with a white core of ash. Today it is the bright blue band of the North Unit, and the slick layer many of its landslides ride on."], unit: "Tsbb" },
     { when: "Millions of years later", title: "A high, rolling plain", text: ["Long after the swamps, rivers wandered across a broad plain, spreading polished gravel, including quartzite and porphyry from far to the southwest. That gravel still caps the highest plateaus, more than 400 feet above today's river. There were no badlands yet."], unit: "QTa" },
-    { when: "At least 640,000 years ago", title: "Glaciers turn the river", text: ["The Little Missouri once flowed north toward Hudson Bay. During the Ice Age, continental glaciers pushed into North Dakota and blocked that route. The river was forced east along the edge of the ice onto a shorter, steeper path to the Missouri.", "A steeper river cuts faster. The Little Missouri began slicing down through the soft layers, and the badlands were born. Granite boulders the ice left behind still sit near Sperati Point."], stop: "n-oxbow" },
+    { when: "At least 640,000 years ago", title: "Glaciers turn the river", text: ["The Little Missouri once flowed north toward Hudson Bay. During the Ice Age, continental glaciers pushed into North Dakota and blocked that route. The river was forced east along the edge of the ice onto a shorter, steeper path to the Missouri.", "A steeper river cuts faster. The Little Missouri began slicing down through the soft layers, and the badlands were born. Granite boulders the ice left behind still sit near Sperati Point."], stop: "n-oxbow", flag: true },
     { when: "The Ice Age to today", title: "Carving the badlands", text: ["As the river dug deeper, it left its old floors stranded as gravel benches 160 to 270 feet above the water. Side creeks gnawed back into the uplands, leaving buttes, coulees and tables. Hard sandstone concretions, freed from the softer rock, rolled out as \"cannonballs.\""], photo: "concretions", unit: "Qt1" },
     { when: "Again and again", title: "Fire in the ground", text: ["Erosion exposed the coal seams, and coal exposed to air can catch fire. Seams have burned again and again, baking the clay above them into red clinker that caps ridges across the park. The most recent big burn, at Buck Hill, smoldered from 1951 to 1977. Roosevelt saw burning seams himself in the 1880s."], quote: "q-burning", stop: "coalvein" },
-    { when: "Right now", title: "Still being made", text: ["The badlands are not finished. Hillsides slump after wet springs, floods move the river's sandbars, and the sand on today's valley floors is less than 500 years old. Every storm rewrites a little of the page."], photo: "slump-cannonballs", quote: "q-poe", unit: "Qls" },
+    { when: "Right now", title: "Still being made", text: ["The badlands are not finished. Hillsides slump after wet springs, floods move the river's sandbars, and the sand on today's valley floors is less than 500 years old. Every storm rewrites a little of the page.", "The North Dakota Geological Survey has mapped more than 59,000 landslides across the state. Turn on the statewide landslide layer on the map to see the ones around Medora."], photo: "slump-cannonballs", quote: "q-poe", unit: "Qls" },
   ];
   function buildStory() {
     $("#timeline").innerHTML = STORY.map((c, i) => `
-      <div class="tl ${i === 4 ? "flag" : ""}">
+      <div class="tl ${c.flag ? "flag" : ""}">
         <div class="when">${esc(c.when)}</div>
         <h4>${esc(c.title)}</h4>
         ${c.text.map((t) => `<p>${esc(t)}</p>`).join("")}

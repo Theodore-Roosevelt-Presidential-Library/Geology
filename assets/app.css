@@ -287,6 +287,7 @@ body.embed .wrap { padding: 0 4px; }
 .toggle.range input { width: 100%; accent-color: var(--forest); }
 .swatch.line { height: 4px; width: 18px; border-radius: 2px; vertical-align: 3px; }
 .swatch.round { border-radius: 50%; }
+.swatch.slide { border: 1.5px solid #6e4f7a; background: repeating-linear-gradient(135deg, #6e4f7a 0 1.5px, transparent 1.5px 4px); }
 
 .legend { display: grid; gap: 2px; }
 .legend h5 { font: 700 11px var(--ui); letter-spacing: .1em; text-transform: uppercase; color: var(--muted); margin: 10px 0 4px; }

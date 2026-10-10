@@ -9,6 +9,8 @@ Check these before the trlibrary.com page goes live. ✅ means confirmed against
 - **[NPS-CV]** NPS, Coal Vein Trail guide. https://www.nps.gov/thro/planyourvisit/upload/CoalVeinShort.pdf
 - **[NPS-PF]** NPS, Hike the Petrified Forest. https://www.nps.gov/thingstodo/hike-the-petrified-forest.htm
 - **[NPS-GL]** NPS, Glaciers / Glacial Features. https://www.nps.gov/thro/learn/nature/glaciers.htm
+- **[MS-87]** Erickson, B.R., 1999, *Fossil Lake Wannagan*, Billings County, North Dakota. NDGS Miscellaneous Series 87. https://www.dmr.nd.gov/ndgs/Publication_List/pdf/MISC%20SERIES/MS-87.pdf
+- **[NDGS-LS]** NDGS statewide landslide inventory (59,505 areas, mapped 2016 to early 2023 from aerial photos, NAIP and LiDAR). https://ndgishub.nd.gov/arcgis/rest/services/All_Geology/MapServer/4
 - **[TRC]** Theodore Roosevelt Center quote archive (project file `TR-Quotes-TRC-Archive.json`)
 
 ## Facts used
@@ -44,6 +46,12 @@ Check these before the trlibrary.com page goes live. ✅ means confirmed against
 | Caprock Coulee: caprocks shield softer clay; blue bentonite benches along the trail | Caprock stop | MS-86 mentions bentonite at Caprock Coulee; caprock mechanism is general geology | ⚠️ |
 | Library rooftop view shows Bullion Creek layers around Medora | Library stop | MS-86 fig. 5 (Bullion Creek in cliffs near Medora) | ⚠️ confirm what the rooftop view actually takes in |
 | Regional formation blurbs (Golden Valley, Slope, Cannonball, Ludlow, Hell Creek, Fox Hills, Pierre) | Cards outside the park | General geology | ⚠️ these only show when someone taps outside the park; spot-check against NDGS |
+| Wannagan Creek Quarry dug by the Science Museum of Minnesota every year 1970–1996; Bullion Creek Formation about 20 m below the Sentinel Butte contact; about 60 million years old (early Tiffanian) | Story "Fossil Lake Wannagan", Tbc card | MS-87 | ✅ |
+| About 80 crocodiles (*Borealosuchus formidabilis*); snapping and soft-shelled turtles; *Champsosaurus*; gars and bowfins; early birds (*Presbyornis*, *Dakotornis*); *Plesiadapis*; 100+ plant taxa incl. bald cypress, dawn redwood, magnolia, ginkgo, palm | Same | MS-87 | ✅ |
+| Lake ended when a levee broke and a crevasse splay buried it in about 8 m of sand | Same ("a flood broke through a riverbank") | MS-87 | ✅ |
+| Quarry back-filled and reseeded under Forest Service requirements | Same | MS-87 | ✅ Site deliberately not pinned or located beyond "Billings County" |
+| Fossil bones on public land protected by federal law; nothing may be collected in the park | Same | Paleontological Resources Preservation Act (2009); NPS rules | ⚠️ confirm wording with the park before promoting |
+| "More than 59,000 landslides" mapped statewide | Story "Still being made", landslide layer | NDGS-LS (59,505) | ✅ |
 | Ice Age start "about 2.6 million years ago" | Legend group label | Current ICS definition; MS-86 uses the older 1.6 Ma | ✅ |
 
 ## Roosevelt quotes (verbatim)
