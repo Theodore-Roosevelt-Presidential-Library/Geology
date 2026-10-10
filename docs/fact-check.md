@@ -64,6 +64,10 @@ Check these before the trlibrary.com page goes live. ✅ means confirmed against
 | Cannonball Concretions Pullout | ⚠️ center of 148-99-32bcc (MS-86 fig. 18), via BLM PLSS. Confirm on site |
 | Petrified Forest Plateau | ⚠️ center of 141-102-26cba (MS-86 fig. 26), on the plateau, not the trailhead |
 
+## Drive-along notes
+
+`data/drive.json` reuses facts already checked above. Two pins are approximate (Slump Block, Cannonball Concretions) and use a wider trigger radius (450 m). Drive a test loop before promoting the feature: confirm each note fires at the pullout, not before or after.
+
 ## Known gaps
 
 - The detailed park map covers the South and North Units and the Elkhorn-area quadrangles, but not the town of Medora or the Library grounds. Taps there use the coarser state map.

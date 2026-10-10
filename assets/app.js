@@ -419,6 +419,7 @@
     if (watchId != null) navigator.geolocation.clearWatch(watchId);
     watchId = null; firstFix = true; lastYouUnit = undefined;
     setLocateUi(false, "");
+    if (driveOn) stopDrive();
   }
   function locate() {
     if (watchId != null) return stopLocate();
@@ -428,7 +429,7 @@
     if (!EMBED) $("#map-panel").scrollIntoView({ behavior: "smooth", block: "start" });
     if (EMBED && window.parent !== window) window.parent.postMessage({ type: "read-the-rocks:scrolltop", id: FRAME_ID }, "*");
     initMap().then(() => {
-      watchId = navigator.geolocation.watchPosition(onFix, onFixError, { enableHighAccuracy: true, maximumAge: 10000, timeout: 20000 });
+      watchId = navigator.geolocation.watchPosition(onFix, onFixError, { enableHighAccuracy: true, maximumAge: 5000, timeout: 30000 });
     });
   }
   async function onFix(pos) {
@@ -443,9 +444,11 @@
       firstFix = false;
       map.flyTo(ll, Math.max(map.getZoom(), accuracy < 300 ? 15 : 13), { duration: 0.8 });
     }
+    driveTick(lat, lng);
     const sym = unitAt(lat, lng);
     const key = sym || "out";
     $("#locate-status").textContent = `Following you${acc}. The card updates when you cross into a new layer.`;
+    if (driveOn) { lastYouUnit = key; $("#locate-status").textContent = "Drive-along is on. Keep this page open."; map.setView(ll, Math.max(map.getZoom(), 13), { animate: true }); return; }
     if (key !== lastYouUnit || key === "out" && lastYouUnit === undefined) {
       lastYouUnit = key;
       await openAt(lat, lng, { mode: "you", silent: true });
@@ -453,13 +456,97 @@
   }
   function onFixError(err) {
     const inFrame = EMBED && window.parent !== window;
+    if (err.code !== 1 && watchId != null) {
+      // Timeouts and lost signal are normal in the badlands. Keep the watch running.
+      $("#locate-status").textContent = "Waiting for a GPS signal… keep the page open.";
+      return;
+    }
     const msg = err.code === 1
       ? (inFrame ? "Location is blocked in this window. Open Read the Rocks in its own tab to use your location." : "Location permission was turned off. Allow location for this site in your browser settings, then try again.")
       : "Couldn't get a location fix. Try again in the open, away from tall walls.";
     if (watchId != null) navigator.geolocation.clearWatch(watchId);
     watchId = null; firstFix = true;
     setLocateUi(false, msg);
+    if (driveOn) stopDrive();
     if (inFrame && err.code === 1) $("#locate-status").innerHTML = esc(msg) + ` <a href="${CANONICAL}#map" target="_blank" rel="noopener">Open full page</a>`;
+  }
+
+
+  /* ---------------- drive-along ---------------- */
+  let DRIVE = { routes: [] }, driveOn = false, wakeLock = null, heard = new Set(), lastLayerSpoken = 0, lastLayer = null, speaking = false;
+  const allDriveStops = () => DRIVE.routes.flatMap((r) => r.stops.map((s) => Object.assign({ route: r.name }, s)));
+  const metersBetween = (a, b) => milesBetween(a, b) * 1609.34;
+  function say(text) {
+    if (!$("#drive-voice").checked || !("speechSynthesis" in window)) return;
+    try {
+      speechSynthesis.cancel();
+      const u = new SpeechSynthesisUtterance(text);
+      u.lang = "en-US"; u.rate = 1;
+      const v = speechSynthesis.getVoices().find((x) => /en-US/i.test(x.lang) && /natural|samantha|google/i.test(x.name)) || speechSynthesis.getVoices().find((x) => /en-US/i.test(x.lang));
+      if (v) u.voice = v;
+      u.onstart = () => (speaking = true); u.onend = () => (speaking = false);
+      speechSynthesis.speak(u);
+    } catch (e) {}
+  }
+  async function keepAwake() {
+    try { if ("wakeLock" in navigator && !wakeLock) { wakeLock = await navigator.wakeLock.request("screen"); wakeLock.addEventListener("release", () => (wakeLock = null)); } } catch (e) {}
+  }
+  document.addEventListener("visibilitychange", () => { if (driveOn && document.visibilityState === "visible") keepAwake(); });
+  function setDriveUi() {
+    $$("[data-drive]").forEach((b) => { b.classList.toggle("on", driveOn); b.textContent = driveOn ? "Stop drive-along" : "Start drive-along"; });
+    $("#drive-banner").hidden = !driveOn;
+  }
+  function startDrive() {
+    if (driveOn) return stopDrive();
+    driveOn = true; heard = new Set(); lastLayer = null;
+    show("map");
+    // A tap is needed before most phones will speak; this primes the voice.
+    if ($("#drive-voice").checked && "speechSynthesis" in window) { try { speechSynthesis.speak(new SpeechSynthesisUtterance("Drive-along is on.")); } catch (e) {} }
+    keepAwake();
+    setDriveUi();
+    $("#info").hidden = true;
+    initMap().then(() => $("#map").scrollIntoView({ behavior: "smooth", block: "center" }));
+    $("#drive-banner").innerHTML = `<div class="k">Drive-along</div><b>Finding you…</b><p>Notes pop up as you reach each stop. Drivers: keep your eyes on the road and let the phone talk.</p>`;
+    if (watchId == null) locate();
+  }
+  function stopDrive() {
+    driveOn = false;
+    try { speechSynthesis.cancel(); } catch (e) {}
+    if (wakeLock) { wakeLock.release().catch(() => {}); wakeLock = null; }
+    setDriveUi();
+  }
+  function driveTick(lat, lng) {
+    if (!driveOn) return;
+    const here = [lat, lng];
+    const stops = allDriveStops().map((s) => Object.assign(s, { d: metersBetween(here, [s.lat, s.lng]) })).sort((a, b) => a.d - b.d);
+    const near = stops[0];
+    const banner = $("#drive-banner");
+    if (near && near.d <= near.r && !heard.has(near.id)) {
+      heard.add(near.id);
+      banner.classList.add("arrived");
+      banner.innerHTML = `<div class="k">You're at</div><b>${esc(near.name)}</b><p>${esc(near.note)}</p>
+        <div class="row"><button type="button" data-repeat>Repeat</button><button type="button" data-stopinfo="${esc(near.id)}">More about this stop</button></div>`;
+      $("[data-repeat]", banner).addEventListener("click", () => say(near.note));
+      $("[data-stopinfo]", banner).addEventListener("click", () => (STOPS.some((x) => x.id === near.id) ? openStop(near.id, false) : openAt(near.lat, near.lng, { mode: "tap" })));
+      say(near.note);
+      return;
+    }
+    if (near && near.d <= near.r) return; // still at a stop we've announced; keep its note up
+    banner.classList.remove("arrived");
+    const next = stops.find((s) => !heard.has(s.id));
+    const sym = unitAt(lat, lng);
+    const layerLine = sym ? `Driving across: ${esc(U(sym).name)}` : "Outside the detailed park map";
+    if (next && next.d < 40000) {
+      const mi = next.d / 1609.34;
+      banner.innerHTML = `<div class="k">${esc(next.route)}</div><b>Next: ${esc(next.name)}</b><p style="font:15px var(--ui)">${mi < 0.2 ? "Just ahead" : mi.toFixed(1) + " miles away"} · ${layerLine}</p>`;
+    } else {
+      banner.innerHTML = `<div class="k">Drive-along</div><b>${next ? "Head into the park" : "That's every stop"}</b><p style="font:15px var(--ui)">${next ? `The nearest stop, ${esc(next.name)}, is ${Math.round(next.d / 1609.34)} miles away. Notes start when you get close.` : "Thanks for reading the rocks with us."}</p>`;
+    }
+    if ($("#drive-layers").checked && sym && sym !== lastLayer) {
+      const now = Date.now();
+      if (lastLayer && now - lastLayerSpoken > 45000 && !speaking) { say(`Now crossing ${U(sym).name}. ${U(sym).short}`); lastLayerSpoken = now; }
+      lastLayer = sym;
+    }
   }
 
   /* ---------------- layers column ---------------- */
@@ -599,16 +686,19 @@
   /* ---------------- boot ---------------- */
   async function boot() {
     if (EMBED) { document.body.classList.add("embed"); if (SINGLE) document.body.classList.add("single"); if (params.get("heading") === "off") document.body.classList.add("no-heading"); }
-    const [u, s, c] = await Promise.all([
+    const [u, s, c, dr] = await Promise.all([
       fetch("data/units.json").then((r) => r.json()),
       fetch("data/stops.json").then((r) => r.json()),
       fetch("assets/photos/credits.json").then((r) => r.json()).catch(() => ({})),
+      fetch("data/drive.json").then((r) => r.json()).catch(() => ({ routes: [] })),
     ]);
+    DRIVE = dr;
     UNITS = u.units; QUOTES = u.quotes; REGIONAL = u.regional; GROUPS = u.groups; STOPS = s; credits = c;
     if (window.matchMedia("(max-width: 860px)").matches) $("#legend-box").open = false;
     buildLegend(); buildJumps(); buildColumn(); buildStops(); buildStory(); buildCredits();
     $$(".tabs button").forEach((b) => b.addEventListener("click", () => show(b.dataset.view)));
     $$("[data-locate]").forEach((b) => b.addEventListener("click", locate));
+    $$("[data-drive]").forEach((b) => b.addEventListener("click", startDrive));
     $$('a[href="#map"]').forEach((a) => a.addEventListener("click", (e) => { e.preventDefault(); show("map"); $(".tabs").scrollIntoView({ behavior: "smooth" }); }));
     window.addEventListener("hashchange", () => { const v = location.hash.slice(1); if (VIEWS.includes(v)) show(v, false); });
 

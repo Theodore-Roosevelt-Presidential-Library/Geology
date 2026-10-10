@@ -60,6 +60,13 @@
         <aside class="map-side" id="map-side">
           <button class="btn locate-btn" type="button" data-locate><span class="dot" aria-hidden="true"></span> <span data-locate-label>Use my location</span></button>
           <p class="small" id="locate-status" role="status" aria-live="polite"></p>
+          <div class="drive-box">
+            <h4>Drive-along</h4>
+            <p class="small">Riding through the park? Notes pop up, and can be read aloud, as you reach each stop on the South Unit Scenic Loop or the North Unit Scenic Drive.</p>
+            <button class="btn alt drive-btn" type="button" data-drive>Start drive-along</button>
+            <label class="toggle"><input type="checkbox" id="drive-voice" checked> Read notes aloud</label>
+            <label class="toggle"><input type="checkbox" id="drive-layers"> Also announce new rock layers</label>
+          </div>
           <h4>Jump to</h4>
           <div class="chips" id="jump"></div>
           <h4>Layers</h4>
@@ -84,6 +91,7 @@
           <div id="map" role="region" aria-label="Geologic map of Theodore Roosevelt National Park"></div>
           <div class="map-loading" id="map-loading">Loading the rock map…</div>
           <div class="map-hint" id="map-hint">Tap anywhere on the map</div>
+          <div class="drive-banner" id="drive-banner" hidden aria-live="polite"></div>
           <div class="card-sheet" id="info" hidden aria-live="polite"></div>
         </div>
       </div>
@@ -115,6 +123,7 @@
           <div class="eyebrow">Where to see it</div>
           <h2>Where to See It</h2>
           <p class="lede">Pullouts and trails where the geology is front and center. Every stop links to the map and to directions.</p>
+          <p><button class="btn alt" type="button" data-drive>Start drive-along</button> <span class="small">Notes pop up, and can be read aloud, as you reach each stop.</span></p>
         </div>
         <div class="chips" id="stop-filter" role="group" aria-label="Filter by park unit">
           <button class="chip" data-area="all" aria-pressed="true">All</button>

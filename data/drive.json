@@ -1,0 +1,35 @@
+{
+ "_about": "Drive-along stops. Notes pop up and can be read aloud when a phone comes within `r` meters. Coordinates: WildlifeWatch spots.json (verified) except where `approx` is true (from PLSS sections cited in NDGS Misc. Series 86). Keep notes short: they are read aloud while someone drives.",
+ "routes": [
+  {"id": "south", "name": "South Unit Scenic Loop", "stops": [
+   {"id": "skyline", "name": "Skyline Vista", "lat": 46.93408, "lng": -103.53296, "r": 250, "unit": "Qt4",
+    "note": "Skyline Vista. You are standing on a flat bench of river gravel, an old floor of the Little Missouri left high and dry during the Ice Age, about 260 feet above today's river."},
+   {"id": "windcanyon", "name": "Wind Canyon Trail", "lat": 46.98968, "lng": -103.48834, "r": 250, "unit": "Tbc",
+    "note": "Wind Canyon. The short trail climbs to a big bend of the Little Missouri. Watch the cutbank on the outside of the bend. Every flood shaves off a little more, the same work that carved all of these badlands."},
+   {"id": "scoria", "name": "Scoria Point Overlook", "lat": 46.93143, "lng": -103.48537, "r": 250, "unit": "Tsbc",
+    "note": "Scoria Point. Look for the three-part stack: yellowish Bullion Creek layers at the bottom, a band of red clinker, then gray-brown Sentinel Butte layers on top. The red rock formed when a coal seam burned underground and baked the clay above it like brick."},
+   {"id": "badlands", "name": "Badlands Overlook", "lat": 46.92194, "lng": -103.45212, "r": 250, "unit": "Tsbc",
+    "note": "Badlands Overlook. The red rock capping the ridges is clinker. It is harder than the layers around it, which is why these ridges are still standing while the softer rock washes away."},
+   {"id": "coalvein", "name": "Coal Vein Trail", "lat": 46.92310, "lng": -103.40058, "r": 250, "unit": "Tsbc",
+    "note": "Coal Vein Trail. Lightning set a coal seam here on fire in 1951, and it burned underground for 26 years. As the coal turned to ash, the ground above slumped into the gap, and the heat baked fresh red clinker."},
+   {"id": "buckhill", "name": "Buck Hill", "lat": 46.92557, "lng": -103.38879, "r": 250, "unit": "Qls",
+    "note": "Buck Hill, one of the highest points in the South Unit. Some of the unit's largest landslides surround it, where soft clay layers soaked up water and let whole hillsides slide."},
+   {"id": "boicourt", "name": "Boicourt Overlook", "lat": 46.95705, "lng": -103.39741, "r": 250, "unit": "Tsb",
+    "note": "Boicourt Overlook. Two separate beds of petrified stumps run through these slopes. Each is the floor of a swamp forest that grew here about 60 million years ago."},
+   {"id": "oldeast", "name": "Old East Entrance", "lat": 46.90854, "lng": -103.42188, "r": 300, "unit": "Tsb",
+    "note": "Near the old east entrance, petrified stumps still stand upright in the slopes, right where the trees grew. Floods buried their bases, and silica slowly turned the wood to stone."},
+   {"id": "painted", "name": "Painted Canyon Visitor Center", "lat": 46.89545, "lng": -103.38158, "r": 300, "unit": "Tsb",
+    "note": "Painted Canyon. Gray-brown sandstone and clay, black coal seams and red clinker: the whole story of the badlands in one view. Petrified stumps stand in the slopes around the visitor center."}
+  ]},
+  {"id": "north", "name": "North Unit Scenic Drive", "stops": [
+   {"id": "n-slump", "name": "Slump Block Pullout", "lat": 47.59337, "lng": -103.29892, "r": 450, "approx": true, "unit": "Qls",
+    "note": "Slump blocks. These tilted blocks broke away from the valley wall and rotated as they slid. Geologists matched a yellow layer in one block to the same layer in the cliff above. That block dropped about 120 feet."},
+   {"id": "n-concretions", "name": "Cannonball Concretions Pullout", "lat": 47.59619, "lng": -103.33240, "r": 450, "approx": true, "unit": "Tsb",
+    "note": "Cannonball concretions. These balls of sandstone were cemented hard by minerals underground. When the softer sand around them washed away, the cannonballs were left behind."},
+   {"id": "n-caprock", "name": "Caprock Coulee Trail", "lat": 47.61544, "lng": -103.36145, "r": 250, "unit": "Tsbb",
+    "note": "Caprock Coulee. Watch for flat blue-gray benches. That clay is volcanic ash that drifted here from eruptions more than 250 miles away. It turns slick after rain."},
+   {"id": "n-oxbow", "name": "Oxbow Overlook", "lat": 47.60282, "lng": -103.44165, "r": 250, "unit": "Tsbb",
+    "note": "Oxbow Overlook. The Little Missouri once flowed north toward Hudson Bay. Ice Age glaciers blocked it, at least 640,000 years ago, and turned it east. The steeper new route let the river cut fast, carving the canyon below. Find the blue band of bentonite in the walls."}
+  ]}
+ ]
+}

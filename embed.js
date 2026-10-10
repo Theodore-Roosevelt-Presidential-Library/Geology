@@ -42,7 +42,7 @@
     f.src = ORIGIN + "/" + q;
     f.title = "Read the Rocks — geology of Theodore Roosevelt National Park";
     f.loading = "lazy";
-    f.setAttribute("allow", "geolocation; fullscreen; clipboard-write; web-share");
+    f.setAttribute("allow", "geolocation; fullscreen; clipboard-write; web-share; screen-wake-lock");
     f.style.cssText = "width:100%;border:0;display:block;overflow:hidden;height:" + (parseInt(el.getAttribute("data-min-height"), 10) || 900) + "px";
     el.appendChild(f);
     frames[id] = f;

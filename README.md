@@ -9,6 +9,7 @@ Geology explorer for Theodore Roosevelt National Park and the North Dakota Badla
 | Section | What it does | Data |
 |---|---|---|
 | Explore the Map | Colored geologic map of the park. Tap anywhere for the rock layer, its age, a plain-language story, what to look for and the elevation. "Use my location" follows you and updates the card when you cross into a new layer. Every spot has a share link and directions. Outside the park map, taps fall back to the USGS state bedrock map (via Macrostrat), so it works anywhere in the U.S. | `data/geology.topo.json`, `data/units.json`, Macrostrat API |
+| Drive-along | Riding through the park, notes pop up (and can be read aloud) as the phone reaches each stop on the South Unit Scenic Loop and the North Unit Scenic Drive. Keeps the screen awake; optional spoken alerts when you cross into a new rock layer. Start it from the map sidebar or Where to See It | `data/drive.json` |
 | Read the Layers | Clickable layer-cake column, oldest at the bottom, plus the younger deposits cut into it | `data/units.json` |
 | Where to See It | 15 pullouts and trails with what to look for, map links and directions | `data/stops.json` |
 | How the Badlands Formed | Eight-chapter timeline, from the swamp forests to the glacier that turned the river | in `assets/app.js` (`STORY`) |
@@ -47,6 +48,7 @@ python3 scripts/build_geology.py thro_geology.gdb data node_modules/.bin
 ## Editing content
 
 - Rock-layer text, colors, Roosevelt quotes: `data/units.json`
+- Drive-along notes and trigger radius: `data/drive.json` (notes are read aloud, so keep them to two or three sentences)
 - Stops: `data/stops.json` (coordinates and their sources are listed in `docs/fact-check.md`)
 - Timeline: `STORY` in `assets/app.js`
 
