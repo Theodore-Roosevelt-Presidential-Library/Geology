@@ -12,6 +12,7 @@
  *   data-stop="n-oxbow"      open one stop on the map
  *   data-unit="Tsbc"         highlight one rock layer on the map
  *   data-at="46.93,-103.48"  open the map at a point
+ *   data-heading="off"       hide the section heading (when the host page has its own)
  *   data-min-height="700"    starting height in px before the widget reports its size
  *
  * The iframe is granted geolocation so "Use my location" works inside the page.
@@ -33,7 +34,7 @@
     var view = el.getAttribute("data-read-the-rocks") || "map";
     var id = "rtr" + ++n;
     var q = "?embed=1&id=" + id + (view !== "all" ? "&view=" + encodeURIComponent(view) : "");
-    ["stop", "unit", "at"].forEach(function (k) {
+    ["stop", "unit", "at", "heading"].forEach(function (k) {
       var v = el.getAttribute("data-" + k);
       if (v) q += "&" + k + "=" + encodeURIComponent(v);
     });

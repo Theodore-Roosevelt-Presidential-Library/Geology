@@ -386,3 +386,5 @@ body.embed #map { height: 560px; }
   #map { height: 62vh; min-height: 380px; }
 }
 .stops { align-items: start; }
+
+body.no-heading .panel-head { display: none; }

@@ -158,6 +158,7 @@
       })).addTo(map);
 
       coverageLayer = L.geoJSON(cov, { renderer, interactive: false, style: { color: "#163728", weight: 1.5, dashArray: "6 5", fill: false, opacity: 0.7 } }).addTo(map);
+      if (!params.get("at") && !params.get("stop")) map.fitBounds([[46.88, -103.6], [47.06, -103.35]]);
 
       stopsLayer = L.layerGroup(STOPS.map((s) => L.marker([s.lat, s.lng], {
         icon: L.divIcon({ className: "", html: `<div class="stop-pin ${s.id === "library" ? "start" : ""}"></div>`, iconSize: [24, 24], iconAnchor: [12, 24] }),
@@ -597,7 +598,7 @@
 
   /* ---------------- boot ---------------- */
   async function boot() {
-    if (EMBED) { document.body.classList.add("embed"); if (SINGLE) document.body.classList.add("single"); }
+    if (EMBED) { document.body.classList.add("embed"); if (SINGLE) document.body.classList.add("single"); if (params.get("heading") === "off") document.body.classList.add("no-heading"); }
     const [u, s, c] = await Promise.all([
       fetch("data/units.json").then((r) => r.json()),
       fetch("data/stops.json").then((r) => r.json()),
